@@ -1,4 +1,5 @@
-function createCustomColor(tracking, value)
+
+function createCustomColor(tracking, colorName, value)
 {
     var components = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(value),
         customColorR = parseInt(components[1], 16),
@@ -9,7 +10,7 @@ function createCustomColor(tracking, value)
 
     if (colorTotal === 0)
     {
-        tracking.ColorTracker.registerColor('custom', function(r, g, b) {
+        tracking.ColorTracker.registerColor(colorName, function(r, g, b) {
             return r + g + b < 10;
         });
     }
@@ -18,7 +19,7 @@ function createCustomColor(tracking, value)
         var rRatio = customColorR / colorTotal;
         var gRatio = customColorG / colorTotal;
 
-        tracking.ColorTracker.registerColor('custom', function(r, g, b) {
+        tracking.ColorTracker.registerColor(colorName, function(r, g, b) {
             var colorTotal2 = r + g + b;
 
             if (colorTotal2 === 0) {
@@ -39,19 +40,4 @@ function createCustomColor(tracking, value)
                 deltaG > 0.9 && deltaG < 1.1;
         });
     }
-}
-
-function updateColors(tracker, trackedColors)
-{
-    var colors = [];
-
-    for (var color in trackedColors)
-    {
-        if (trackedColors[color])
-        {
-            colors.push(color);
-        }
-    }
-
-    tracker.setColors(colors);
 }
