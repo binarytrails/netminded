@@ -10,13 +10,11 @@
 	height: 100%;
     top: 0; right: 0; bottom: 0; left: 0;
     z-index: 3;
-	background-image: url(../images/background.jpg);
 	background-size: 100%;
 	transition:background-size 10s;
 }
     #container:hover
     {
-        background-image: url(../images/background.jpg);
         background-size: 109%;
     }
 

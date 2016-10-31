@@ -1,10 +1,24 @@
 /*
+ * No Copyrights Infringement is intended. If anything was used that may have
+ * copyrights, please let us know and we will remove it.
  *
- */
+ * This file implement the color tracking using the tracking.js library.
+ * We use it to briefly implement an AI color recognition system.
+ *
+ * Concordia University
+ * CART 351 : Networks & Navigation
+ * Written by Vsevolod (Seva) Ivanov
+ *
+ * TODO:
+ *      - Add colors logic
+ *      - Add locking mechanism
+*/
+
 var canvas = document.getElementById('canvas'),
     context = canvas.getContext('2d'),
     tracker = new tracking.ColorTracker();
 
+// The ones we want to track
 var colors = {
     skin: '#877f7f',
     snapback: '#0f307d',
@@ -18,6 +32,10 @@ function createCustomColor(tracking, colorName, value)
 {
     /* This function is taken from:
      * https://github.com/eduardolundgren/tracking.js/blob/master/examples/assets/color_camera_gui.js
+     *
+     * It registers a color at tracking.js by defining the r b g precision of
+     * custom color and it is tagging this colors by a colorName that we can
+     * later use in the tracker events.
      */
     var components = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(value),
         customColorR = parseInt(components[1], 16),
@@ -62,8 +80,12 @@ function createCustomColor(tracking, colorName, value)
 
 function drawRectangles(context, rect)
 {
+    /* We draw rectangles in the context of our canvas to display for a human
+     * interpretation the detected areas by color that we track.
+     */
     if (trackedColors.indexOf(rect.color) != -1)
     {
+        // Set its borders to the same color that we track
         rect.color = colors[rect.color];
     }
     else
@@ -105,14 +127,13 @@ window.onload = function()
             drawRectangles(context, rect);
         });
 
-        // add the colors to the tracker
+        // Add the colors to the tracker
         for (var name in colors)
         {
             tracker.customColor = colors[name];
             createCustomColor(tracking, name, colors[name]);
         }
-        // update the tracker
+        // Update the tracker
         tracker.setColors(trackedColors);
     });
 };
-

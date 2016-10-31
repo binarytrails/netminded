@@ -1,3 +1,5 @@
+var IMAGES_ROOT = "../images/"
+
 function createTheSlider() {
 	if (moviesReady) {
       $(".center").slick({
@@ -16,23 +18,18 @@ function createTheSlider() {
     }
  }
 
- 	//Marie's part interacting with the movies
- 
- 
+//Marie's part displaying movies inside the sliders
     
-    
-    //Marie's part displaying movies inside the sliders
-    
-	var moviesReady = false;  
-    
-    var typeArray = [];
+var moviesReady = false;  
 
-	var girlyArray =[];
-	var horrorArray =[];
-	var natureArray = [];
-	var childishArray = [];
-	var actionArray = [];
-	var AIArray = [];
+var typeArray = [];
+
+var girlyArray =[];
+var horrorArray =[];
+var natureArray = [];
+var childishArray = [];
+var actionArray = [];
+var AIArray = [];
 
 var displayArray = [];
 var numbHistory = [];
@@ -51,13 +48,25 @@ var badMovieCount = 0;
 
 function preload() {
 	for (var i = 0; i < 30; i++) {
-		girlyArray[i] = new createType("badMovie","movies/girly/"+ i + ".jpg");
-		horrorArray[i] = new createType("badMovie","movies/horror/"+ i + ".jpg");
-		natureArray[i] = new createType("badMovie","movies/nature/"+ i + ".jpg");
-		childishArray[i] = new createType("badMovie","movies/childish/"+ i + ".jpg");
-		actionArray[i] = new createType("badMovie","movies/action/"+ i + ".jpg");
-		AIArray[i] = new createType("goodMovie", "movies/AI.png"); 
-		bipSound = loadSound('sound/bip.wav');
+		girlyArray[i] = new createType(
+            "badMovie", IMAGES_ROOT + "movies/girly/" + i + ".jpg");
+		
+        horrorArray[i] = new createType(
+            "badMovie", IMAGES_ROOT + "movies/horror/" + i + ".jpg");
+		
+        natureArray[i] = new createType(
+            "badMovie", IMAGES_ROOT + "movies/nature/" + i + ".jpg");
+		
+        childishArray[i] = new createType(
+            "badMovie", IMAGES_ROOT + "movies/childish/" + i + ".jpg");
+		
+        actionArray[i] = new createType(
+            "badMovie", IMAGES_ROOT + "movies/action/"+ i + ".jpg");
+        
+        AIArray[i] = new createType(
+            "goodMovie", IMAGES_ROOT + "movies/AI.png"); 
+		
+        //bipSound = loadSound('sound/bip.wav');
 	}
 	
 /****************	supposed values given by SEVA  *******************/
