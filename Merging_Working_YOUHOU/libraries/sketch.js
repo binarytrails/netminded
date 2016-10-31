@@ -16,10 +16,6 @@ function createTheSlider() {
     }
  }
 
-$(document).ready(function () {
-	
-});
- 
  	//Marie's part interacting with the movies
  
  
@@ -311,6 +307,23 @@ function displayMovieSliders() {
 	resetSlider = false;
 	moviesReady = true;
 	createTheSlider();
+
+    $('img').click(function()
+    {
+        if (this.className == 'badMovie')
+        {
+            //console.log('YOU WILL NEVER SEE THIS');
+            $(this).effect( "shake", {times:2}, 500 );
+            badMovieCount++;
+            console.log('badMovieCount: '+badMovieCount);
+        }
+        else
+        {
+            console.log('GOOD CHOICE!');
+        }
+    });
+
+
 }
 
 function resetTheSlider(firstSlider, secondSlider, thirdSlider) {
@@ -410,17 +423,6 @@ function mousePressed() {
 function checkImages() {
 
 
-$('img').click(function() {
-	if (this.className == 'badMovie') {
-		//console.log('YOU WILL NEVER SEE THIS');
-		$(this).effect( "shake", {times:2}, 500 );
-		badMovieCount++;
-		console.log('badMovieCount: '+badMovieCount);
-		}
-		else {
-		console.log('GOOD CHOICE!');
-		}
-	});
 	
 }
 
