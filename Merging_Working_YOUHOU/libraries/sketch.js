@@ -1,31 +1,28 @@
-$(document).on('ready', function() {
-      $(".regular").slick({
-        dots: true,
-        infinite: true,
-        slidesToShow: 3,
-        slidesToScroll: 3
-      });
+function createTheSlider() {
+	if (moviesReady) {
       $(".center").slick({
         dots: true,
         infinite: true,
         centerMode: true,
-        slidesToShow: 3,
-        slidesToScroll: 3
+        slidesToShow: 5,
+        slidesToScroll: 5
       });
       $(".variable").slick({
         dots: true,
         infinite: true,
         variableWidth: true
       });
-});
+      moviesReady = false;
+    }
+ }
+
+    //Marie's part 
     
-    
-    //Marie's part
-    
+	var moviesReady = false;  
     
     var typeArray = [];
 
-var girlyArray =[];
+	var girlyArray =[];
 var horrorArray =[];
 var natureArray = [];
 var childishArray = [];
@@ -243,12 +240,12 @@ var AITitles = [
 
 function preload() {
 	for (var i = 0; i < 30; i++) {
-		girlyArray[i] = new createType(girlyTitles[i],loadImage("movies/girly/"+ i + ".jpg"));
-		horrorArray[i] = new createType(horrorTitles[i],loadImage("movies/horror/"+ i + ".jpg"));
-		natureArray[i] = new createType(natureTitles[i],loadImage("movies/nature/"+ i + ".jpg"));
-		childishArray[i] = new createType(childishTitles[i],loadImage("movies/childish/"+ i + ".jpg"));
-		actionArray[i] = new createType(actionTitles[i],loadImage("movies/action/"+ i + ".jpg"));
-		AIArray[i] = new createType(AITitles[i], loadImage("movies/AI.png")); 
+		girlyArray[i] = new createType(girlyTitles[i],"movies/girly/"+ i + ".jpg");
+		horrorArray[i] = new createType(horrorTitles[i],"movies/horror/"+ i + ".jpg");
+		natureArray[i] = new createType(natureTitles[i],"movies/nature/"+ i + ".jpg");
+		childishArray[i] = new createType(childishTitles[i],"movies/childish/"+ i + ".jpg");
+		actionArray[i] = new createType(actionTitles[i],"movies/action/"+ i + ".jpg");
+		AIArray[i] = new createType(AITitles[i], "movies/AI.png"); 
 	}
 	
 /****************	supposed values given by SEVA  *******************/
@@ -267,7 +264,7 @@ function preload() {
 }
 
 function setup() {
-	createCanvas(windowWidth, windowHeight);
+	createCanvas(0, 0);
 	typeArray = [
 	girlyArray,
 	horrorArray,
@@ -276,36 +273,47 @@ function setup() {
 	actionArray,
 	AIArray,
 	];
-	checkValues(myColorValues);
-	pickMovies();
-  
 }
 
 function draw() {
 	//background(255, 255, 255);
 	//image(displayArray[currentMovie].img, 20, 20, girlyArray[2].img.width/4, girlyArray[2].img.height/4);
 	//text(displayArray[currentMovie].title, width/2, 20);
-	if (resetSlider)
+	if (resetSlider) {
 	displayMovieSliders();
+	}
 }
 
 
 function displayMovieSliders() {
-	
+	checkValues(myColorValues);
+	pickMovies();
 	var firstSlider = document.getElementById("slider1");
 	var secondSlider = document.getElementById("slider2");
 	var thirdSlider = document.getElementById("slider3");
+	resetTheSlider(firstSlider, secondSlider, thirdSlider);
 	for (var i = 0; i < 10; i++) {
-	firstSlider.innerHTML = '<div><a><img src="'+displayArray[i].img+'"></a></div>';
-	secondSlider.innerHTML = '<div><a><img src="'+displayArray[10+i].img+'"></a></div>';
-	thirdSlider.innerHTML = '<div><a><img src="'+displayArray[20+i].img+'"></a></div>';
+	firstSlider.innerHTML += '<div><a href="'+'https://www.google.ca' +'"><img src="'+displayArray[i].img+'"></a></div>';
+	secondSlider.innerHTML += '<div><a><img src="'+displayArray[10+i].img+'" id="img'+i+'"></a></div>';
+	thirdSlider.innerHTML += '<div><a><img src="'+displayArray[20+i].img+'"></a></div>';
 	}
 	resetSlider = false;
-	
+	moviesReady = true;
+	createTheSlider();
+}
+
+function resetTheSlider(firstSlider, secondSlider, thirdSlider) {
+	firstSlider.innerHTML = "_";
+	secondSlider.innerHTML = "_";
+	thirdSlider.innerHTML = "_";
+	firstSlider.className = "center slider";
+	secondSlider.className = "center slider";
+	thirdSlider.className = "center slider";
 }
 
 
 function pickMovies() {
+	displayArray = [];
 	for (var i = 0; i < amountsArray.length; i++) {
 		var swappedIndex = getSwappedIndex();
 		for (var j = 0; j < amountsArray[i]; j++) {
@@ -335,12 +343,20 @@ function getSwappedIndex() {
 
 function checkValues(myValueArray) {
 	
-	var pinkValue = myValueArray[0];
-	var redValue = myValueArray[1];
-	var blueValue = myValueArray[2];
-	var greenValue = myValueArray[3];
-	var yellowValue = myValueArray[4];
-	var blackValue = myValueArray[5];
+// 	var pinkValue = myValueArray[0];
+// 	var redValue = myValueArray[1];
+// 	var blueValue = myValueArray[2];
+// 	var greenValue = myValueArray[3];
+// 	var yellowValue = myValueArray[4];
+// 	var blackValue = myValueArray[5];
+
+	var pinkValue = int(random(70));
+	var redValue = int(random(70));
+	var blueValue = int(random(70));
+	var greenValue = int(random(70));
+	var yellowValue = int(random(70));
+	var blackValue = int(random(70));
+
 	
 	var totalValues = pinkValue + redValue + blueValue + greenValue + yellowValue + blackValue + 1;
 	
@@ -351,29 +367,25 @@ function checkValues(myValueArray) {
 	amountsArray[4] = int(blackValue/totalValues*30);	
 	var newTotal = int(pinkValue/totalValues*30)+int(redValue/totalValues*30)+(int(blueValue/totalValues*30)+int(greenValue/totalValues*30))+int(yellowValue/totalValues*30)+int(blackValue/totalValues*30);
 	amountsArray[5] = 30 - newTotal;
-	console.log("the total: "+ newTotal);
+// 	console.log("the total: "+ newTotal);
+// 	console.log("pink amount: "+ amountsArray[0]);
+// 	console.log("red amount: "+ amountsArray[1]);
+// 	console.log("nature amount: "+ amountsArray[2]);
+// 	console.log("yellow amount: "+ amountsArray[3]);
+// 	console.log("black amount: "+ amountsArray[4]);
 }
 
 // When the window is resized, changes the canvas' size to match it
 function windowResized() {
-  	resizeCanvas(windowWidth, windowHeight);
+  	//resizeCanvas(windowWidth, windowHeight);
 }
 
 function keyPressed() {
-  	if (keyCode == UP_ARROW){
-  		if (currentMovie < 29)
-  		currentMovie ++;
-  		else 
-  		currentMovie = 0;
-  		//console.log(currentMovie);
-  	}
-  	if (keyCode == DOWN_ARROW){
-  		if (currentMovie > 0)
-  		currentMovie --;
-  		else 
-  		currentMovie = 29;
-  	}		
+  	if (keyCode == 32){
+  		resetSlider = true;
+  	}	
   }
+  
 
 // create different types of movie classes
 function createType(myMovieTitle, incomingImage) {
