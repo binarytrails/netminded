@@ -16,7 +16,16 @@ function createTheSlider() {
     }
  }
 
-    //Marie's part 
+$(document).ready(function () {
+	
+});
+ 
+ 	//Marie's part interacting with the movies
+ 
+ 
+    
+    
+    //Marie's part displaying movies inside the sliders
     
 	var moviesReady = false;  
     
@@ -31,6 +40,8 @@ var AIArray = [];
 
 var displayArray = [];
 var numbHistory = [];
+
+var badMovieCount = 0;
 
 
 var girlyTitles = [
@@ -240,12 +251,12 @@ var AITitles = [
 
 function preload() {
 	for (var i = 0; i < 30; i++) {
-		girlyArray[i] = new createType(girlyTitles[i],"movies/girly/"+ i + ".jpg");
-		horrorArray[i] = new createType(horrorTitles[i],"movies/horror/"+ i + ".jpg");
-		natureArray[i] = new createType(natureTitles[i],"movies/nature/"+ i + ".jpg");
-		childishArray[i] = new createType(childishTitles[i],"movies/childish/"+ i + ".jpg");
-		actionArray[i] = new createType(actionTitles[i],"movies/action/"+ i + ".jpg");
-		AIArray[i] = new createType(AITitles[i], "movies/AI.png"); 
+		girlyArray[i] = new createType("badMovie","movies/girly/"+ i + ".jpg");
+		horrorArray[i] = new createType("badMovie","movies/horror/"+ i + ".jpg");
+		natureArray[i] = new createType("badMovie","movies/nature/"+ i + ".jpg");
+		childishArray[i] = new createType("badMovie","movies/childish/"+ i + ".jpg");
+		actionArray[i] = new createType("badMovie","movies/action/"+ i + ".jpg");
+		AIArray[i] = new createType("goodMovie", "movies/AI.png"); 
 	}
 	
 /****************	supposed values given by SEVA  *******************/
@@ -293,9 +304,9 @@ function displayMovieSliders() {
 	var thirdSlider = document.getElementById("slider3");
 	resetTheSlider(firstSlider, secondSlider, thirdSlider);
 	for (var i = 0; i < 10; i++) {
-	firstSlider.innerHTML += '<div><a href="'+'https://www.google.ca' +'"><img src="'+displayArray[i].img+'"></a></div>';
-	secondSlider.innerHTML += '<div><a><img src="'+displayArray[10+i].img+'" id="img'+i+'"></a></div>';
-	thirdSlider.innerHTML += '<div><a><img src="'+displayArray[20+i].img+'"></a></div>';
+	firstSlider.innerHTML += '<div><a><img src="'+displayArray[i].img+'" class="'+displayArray[i].status+'"></a></div>';
+	secondSlider.innerHTML += '<div><a><img src="'+displayArray[10+i].img+'" class="'+displayArray[i+10].status+'"></a></div>';
+	thirdSlider.innerHTML += '<div><a><img src="'+displayArray[20+i].img+'" class="'+displayArray[i+20].status+'"></a></div>';
 	}
 	resetSlider = false;
 	moviesReady = true;
@@ -383,14 +394,42 @@ function windowResized() {
 function keyPressed() {
   	if (keyCode == 32){
   		resetSlider = true;
+  	}
+  	if (keyCode == 49) {
+  		var firstImg = document.getElementById("img1");
+  		console.log(firstImg);
   	}	
   }
   
+function mousePressed() {
+	
+	checkImages();
+	
+}
+
+function checkImages() {
+
+
+$('img').click(function() {
+	if (this.className == 'badMovie') {
+		//console.log('YOU WILL NEVER SEE THIS');
+		$(this).effect( "shake", {times:2}, 500 );
+		badMovieCount++;
+		console.log('badMovieCount: '+badMovieCount);
+		}
+		else {
+		console.log('GOOD CHOICE!');
+		}
+	});
+	
+}
+
+  
 
 // create different types of movie classes
-function createType(myMovieTitle, incomingImage) {
+function createType(myMoviestatus, incomingImage) {
 
   this.img = incomingImage;
-  this.title = myMovieTitle;
+  this.status = myMoviestatus;
   
 };
