@@ -56,12 +56,11 @@
 #initialize{ /* Red Box Link */
 	position:absolute;
 	width:20%;
-	height: 7%;
 	top:52%;
 	left:3%;
 	background-color: #d30a0a;
 	z-index: 1;
-	 box-shadow: 2px 2px 3px #1b1b1c;
+    box-shadow: 2px 2px 3px #1b1b1c;
 }
 
 #initialize h2{
