@@ -33,7 +33,7 @@
     color: transparent;
     border: none;
     outline: none;
-    background: #d30a0a;
+    background-color: transparent;
 }
 .slick-prev:hover,
 .slick-prev:focus,
@@ -42,7 +42,7 @@
 {
     color: transparent;
     outline: none;
-    background: #960404;
+    background: transparent;
 }
 .slick-prev:hover:before,
 .slick-prev:focus:before,
@@ -82,7 +82,13 @@
 }
 .slick-prev:before
 {
-    content: '←';
+    content: "";
+    background:url(../../images/left.png);
+    display: inline-block;
+     width: 16px;
+    height: 16px;
+      background-size: 100%;
+
 }
 [dir='rtl'] .slick-prev:before
 {
@@ -100,7 +106,12 @@
 }
 .slick-next:before
 {
-    content: '→';
+    content: "";
+    background:url(../../images/right.png);
+    display: inline-block;
+     width: 16px;
+    height: 16px;
+      background-size: 100%;
 }
 [dir='rtl'] .slick-next:before
 {
