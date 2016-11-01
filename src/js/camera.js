@@ -11,47 +11,57 @@
  *
 */
 
-// The ones we want to track
+// The colors we want to track
 var colors = {
-    skin: '#877f7f',
-    snapback: '#0f307d',
-    yellowBallon: '#89893f',
-    purpleTshirt: '#6b416e'
-};
-/*
-var colors = {
-    skin: {
-        hex: '#877f7f',
-        detected = false
+    pink:
+    {
+        hex: '#',
+        rectCounter: 0,
+        percentage: 0
     },
-    snapback: {
-        hex: '#0f307d',
-        detected = false
+    red: {
+        hex: '#',
+        rectCounter: 0,
+        percentage: 0
     },
-    yellowBallon: {
-        hex: '#89893f',
-        detected = false
+    blue: {
+        hex: '#',
+        rectCounter: 0,
+        percentage: 0
     },
-    purpleTshirt: {
-        hex: '#6b416e',
-        detected = false
+    green: {
+        hex: '#',
+        rectCounter: 0,
+        percentage: 0
+    },
+    yellow: {
+        hex: '#',
+        rectCounter: 0,
+        percentage: 0
+    },
+    black: {
+        hex: '#000000',
+        rectCounter: 0,
+        percentage: 0
     }
 };
-*/
+
 var supportedColors = ["cyan", "magenta", "yellow"],
     trackedColors = Object.keys(colors); //.concat(supportedColors);
 
 var canvas = document.getElementById('canvas'),
     context = canvas.getContext('2d'),
-    tracker = new tracking.ColorTracker();
+    tracker = new tracking.ColorTracker(),
+    cameraReady = false;
 
 // Capture vars to time the color processing
 var capStart = (new Date()).getTime(),  // secs
     capInterval = 5,                    // secs
-    capDelay = 2;                       // secs
+    capDelay = 0;                       // secs
 
 tracker.on('track', function(event)
 {
+    cameraReady = true;
     context.clearRect(0, 0, canvas.width, canvas.height);
 
     event.data.forEach(function(rect)
@@ -61,14 +71,28 @@ tracker.on('track', function(event)
 
         // It will look every n sec (interval) during k sec (delay)
         if ((diffInSeconds(capStart) >= capInterval) &&
-            (diffInSeconds(capStart) <= capInterval + capDelay))
+            (diffInSeconds(capStart) <= (capInterval + capDelay)))
         {
-            console.log('timed color capturing');
+            console.log('timed color capturing ');
+            /* FIXME:
+             *  Getting called too many times even with 0 delay
+             *  Maybe due to the tracking events going too fast
+             */
+            updateColorPercentage(rect);
         }
-        // After which it will reset capture start to current time
+        // After which it will reset the capture
         else if (diffInSeconds(capStart) >= capInterval + capDelay)
         {
             capStart = (new Date()).getTime();
+            for (var name in colors)
+            {
+                console.log("Color : " + name);
+                console.log("Rectangles : " + colors[name].rectCounter);
+                console.log("Percentage : " + colors[name].percentage);
+
+                colors[name].rectCounter = 0;
+                colors[name].percentage = 0;
+            }
         }
 
         /* To see them on camera display
@@ -82,11 +106,30 @@ tracker.on('track', function(event)
     {
         tracker.customColor = colors[name];
         createCustomColor(
-            tracking, name, colors[name]);
+            tracking, name, colors[name].hex);
     }
     // Update the tracker
     tracker.setColors(trackedColors);
 });
+
+function updateColorPercentage(rect)
+{
+    var name = rect.color,
+        canvasSurface = canvas.width * canvas.height,
+        rectSurface = rect.width * rect.height;
+
+    var rectSurfacePercentage = Math.floor(rectSurface / canvasSurface);
+
+    var newPercentage = colors[name].percentage + rectSurfacePercentage;
+
+    if (newPercentage > 100)
+    {
+        newPercentage = 100;
+    }
+
+    colors[name].rectCounter++;
+    colors[name].percentage = newPercentage;
+}
 
 function initCameraTracking()
 {
