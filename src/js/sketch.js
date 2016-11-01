@@ -42,6 +42,7 @@ var myColorValues = [];
 
 var amountsArray = [];
 var resetSlider = true;
+var cameraInitialized = false;
 
 var bipSound;
 
@@ -74,10 +75,10 @@ function preload()
     /* TODO explain the meaning of the below */
 
     myColorValues = [
-		60, //pink
+		0, //pink
 		0,	//red
-		10,	//blue
-		20,	//green
+		0,	//blue
+		0,	//green
 		0,	//yellow
 		0,	//black
 	]
@@ -99,9 +100,22 @@ function draw() {
 	//background(255, 255, 255);
 	//image(displayArray[currentMovie].img, 20, 20, girlyArray[2].img.width/4, girlyArray[2].img.height/4);
 	//text(displayArray[currentMovie].title, width/2, 20);
-	if (resetSlider) {
-	displayMovieSliders();
+	if (cameraInitialized) {
+		if (resetSlider) {
+			displayMovieSliders();
+		}
 	}
+}
+
+function initMovies(colors) {
+	cameraInitialized = true;
+	resetSlider = true;
+	myColorValues[0] = colors.pink.percentage;
+	myColorValues[1] = colors.red.percentage;
+	myColorValues[2] = colors.blue.percentage;
+	myColorValues[3] = colors.green.percentage;
+	myColorValues[4] = colors.yellow.percentage;
+	myColorValues[5] = colors.black.percentage;
 }
 
 function displayMovieSliders()
@@ -223,19 +237,19 @@ function getSwappedIndex(wantedLength) {
 
 function checkValues(myValueArray) {
 
-// 	var pinkValue = myValueArray[0];
-// 	var redValue = myValueArray[1];
-// 	var blueValue = myValueArray[2];
-// 	var greenValue = myValueArray[3];
-// 	var yellowValue = myValueArray[4];
-// 	var blackValue = myValueArray[5];
+	var pinkValue = myValueArray[0];
+	var redValue = myValueArray[1];
+	var blueValue = myValueArray[2];
+	var greenValue = myValueArray[3];
+	var yellowValue = myValueArray[4];
+	var blackValue = myValueArray[5];
 
-	var pinkValue = int(random(70));
-	var redValue = int(random(70));
-	var blueValue = int(random(70));
-	var greenValue = int(random(70));
-	var yellowValue = int(random(70));
-	var blackValue = int(random(70));
+// 	var pinkValue = int(random(70));
+// 	var redValue = int(random(70));
+// 	var blueValue = int(random(70));
+// 	var greenValue = int(random(70));
+// 	var yellowValue = int(random(70));
+// 	var blackValue = int(random(70));
 
 
 	var totalValues = pinkValue + redValue + blueValue + greenValue + yellowValue + blackValue + 1;

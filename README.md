@@ -18,7 +18,7 @@ Context: CART 351 - Networks & Navigation
     - ~~Add A.I posters to Carousel~~
     - Movies <-> colors interactions
     - Redirect to youtube trailers
-    - Top banner
+    - ~~Top banner~~
     - Better css (i.e. carousel arrows)
     - Add sound after n lock attempts
 
