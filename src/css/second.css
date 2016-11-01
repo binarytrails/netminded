@@ -24,7 +24,8 @@ body
 
 #fullImg {
 	width: 100%;
-	height: 500px;
+	height: 42vw;
+	position: center;
 }
 
 #whiteSquare{
@@ -40,7 +41,7 @@ body
 }
 
 #logo{ /* Netminded Logo */
-	position: static;
+	position: absolute;
 	width: 16%;
 	margin-left:1.7%;
 	margin-top:3%;
