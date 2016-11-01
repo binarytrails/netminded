@@ -9,9 +9,6 @@
  * CART 351 : Networks & Navigation
  * Written by Vsevolod (Seva) Ivanov
  *
- * TODO:
- *      - Add colors logic
- *      - Add locking mechanism
 */
 
 var canvas = document.getElementById('canvas'),
@@ -106,34 +103,3 @@ function drawRectangles(context, rect)
             rect.x + rect.width + 5, rect.y + 22
     );
 }
-
-window.onload = function()
-{
-    tracking.track('#video', tracker, { camera: true });
-
-    tracker.on('track', function(event) {
-        context.clearRect(0, 0, canvas.width, canvas.height);
-
-        event.data.forEach(function(rect) {
-            // Colors logic
-            console.log(rect.color);
-
-            if (rect.color == 'skin')
-            {
-                console.log('skin color logic');
-            }
-
-            // To see them on camera display turn-off the z-index on #container
-            drawRectangles(context, rect);
-        });
-
-        // Add the colors to the tracker
-        for (var name in colors)
-        {
-            tracker.customColor = colors[name];
-            createCustomColor(tracking, name, colors[name]);
-        }
-        // Update the tracker
-        tracker.setColors(trackedColors);
-    });
-};
