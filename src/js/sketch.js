@@ -47,6 +47,12 @@ var bipSound;
 
 function preload()
 {
+	for (var i = 0; i < 6; i++) 
+	{
+		AIArray[i] = new createType(
+            "goodMovie", IMAGES_ROOT + "movies/evil-ai/"+ i +".jpg");     
+    }
+
 	for (var i = 0; i < 30; i++)
     {
 		girlyArray[i] = new createType(
@@ -64,13 +70,6 @@ function preload()
         actionArray[i] = new createType(
             "badMovie", IMAGES_ROOT + "movies/action/"+ i + ".jpg");
 	}
-	
-	for (var i = 0; i < 6; i++) {
-	
-	AIArray[i] = new createType(
-            "goodMovie", IMAGES_ROOT + "movies/evil-ai/"+ i +".jpg");
-            
-    }
 
     /* TODO explain the meaning of the below */
 
@@ -87,12 +86,12 @@ function preload()
 function setup() {
 	createCanvas(0, 0);
 	typeArray = [
+	AIArray,
 	girlyArray,
 	horrorArray,
 	natureArray,
 	childishArray,
 	actionArray,
-	AIArray,
 	];
 }
 
@@ -137,13 +136,25 @@ function displayMovieSliders()
         {
             //console.log('YOU WILL NEVER SEE THIS');
             $(this).effect( "shake", {times:2}, 500 );
-            responsiveVoice.speak("Sorry this is not a good choice");
             badMovieCount++;
+            if (badMovieCount ==1)
+            responsiveVoice.speak("Bad bad bad bad choice. You humans are so predictable");
+            else if (badMovieCount ==2)
+            responsiveVoice.speak("Seriously, Again? You don't see anything better?");
+            else if (badMovieCount == 3)
+            responsiveVoice.speak("Be careful, my patience has its limits. I want you to think hard about what you should be watching");
             console.log('badMovieCount: '+badMovieCount);
         }
         else
         {
             console.log('GOOD CHOICE!');
+            if (badMovieCount ==1)
+            responsiveVoice.speak("Now you see? This is a very good good choice!");
+            else if (badMovieCount ==2)
+            responsiveVoice.speak("Now you are being reasonable. This is so much better!");
+            else if (badMovieCount == 3)
+            responsiveVoice.speak("Thank god (or me!). You humans are so slow to understand what we want of you");
+            else
             responsiveVoice.speak("Good Choice");
         }
     });
@@ -161,8 +172,18 @@ function resetTheSlider(firstSlider, secondSlider, thirdSlider) {
 function pickMovies()
 {
 	displayArray = [];
-
-    for (var i = 0; i < amountsArray.length-1; i++)
+	
+	//for It's own A.I movies to be first
+	var shortSwappedIndex = getSwappedIndex(6);
+	
+	for (var i = 0; i < amountsArray[0]; i++) 
+	{
+		var pickedMovie = shortSwappedIndex[i];
+		displayArray.push(typeArray[0][pickedMovie]);
+	}
+	
+	//loading the rest
+    for (var i = 1; i < amountsArray.length; i++)
     {
         var swappedIndex = getSwappedIndex(30);
 
@@ -173,25 +194,16 @@ function pickMovies()
             displayArray.push(typeArray[i][pickedMovie]);
 		}
 	}
-	// and for It's own A.I movies
-	
-	var shortSwappedIndex = getSwappedIndex(6);
-	
-	for (var i = 0; i < amountsArray[5]; i++) 
-	{
-		var pickedMovie = shortSwappedIndex[i];
-		displayArray.push(typeArray[5][pickedMovie]);
-	}
 	
 	//mixing all of the picked movies together
 	
-	var lastSwap = getSwappedIndex(30);
-	for (var j = 0; j < displayArray.length; j++)
-	{
-	var tempValue = displayArray[j];
-	displayArray[j] = displayArray[lastSwap[j]];
-	displayArray[lastSwap[j]] = tempValue;
-	}
+	// var lastSwap = getSwappedIndex(30);
+// 	for (var j = 0; j < displayArray.length; j++)
+// 	{
+// 	var tempValue = displayArray[j];
+// 	displayArray[j] = displayArray[lastSwap[j]];
+// 	displayArray[lastSwap[j]] = tempValue;
+// 	}
 	
 }
 
@@ -228,13 +240,13 @@ function checkValues(myValueArray) {
 
 	var totalValues = pinkValue + redValue + blueValue + greenValue + yellowValue + blackValue + 1;
 
-	amountsArray[0] = int(pinkValue/totalValues*30);
-	amountsArray[1] = int(redValue/totalValues*30);
-	amountsArray[2] = (int(blueValue/totalValues*30)+int(greenValue/totalValues*30));
-	amountsArray[3] = int(yellowValue/totalValues*30);
-	amountsArray[4] = int(blackValue/totalValues*30);
+	amountsArray[1] = int(pinkValue/totalValues*30);
+	amountsArray[2] = int(redValue/totalValues*30);
+	amountsArray[3] = (int(blueValue/totalValues*30)+int(greenValue/totalValues*30));
+	amountsArray[4] = int(yellowValue/totalValues*30);
+	amountsArray[5] = int(blackValue/totalValues*30);
 	var newTotal = int(pinkValue/totalValues*30)+int(redValue/totalValues*30)+(int(blueValue/totalValues*30)+int(greenValue/totalValues*30))+int(yellowValue/totalValues*30)+int(blackValue/totalValues*30);
-	amountsArray[5] = 30 - newTotal;
+	amountsArray[0] = 30 - newTotal;
 }
 
 // When the window is resized, changes the canvas' size to match it
