@@ -19,8 +19,8 @@ function createTheSlider() {
  }
 
 //Marie's part displaying movies inside the sliders
-    
-var moviesReady = false;  
+
+var moviesReady = false;
 
 var typeArray = [];
 
@@ -36,43 +36,43 @@ var numbHistory = [];
 
 var badMovieCount = 0;
 
-  
-  var currentMovie = 0;
-  var currentType = 0;
-  var myColorValues = [];
-  
-  var amountsArray = [];
-	var  resetSlider = true;
-	
-	var bipSound;
+var currentMovie = 0;
+var currentType = 0;
+var myColorValues = [];
 
-function preload() {
-	for (var i = 0; i < 30; i++) {
+var amountsArray = [];
+var resetSlider = true;
+
+var bipSound;
+
+function preload()
+{
+	for (var i = 0; i < 30; i++)
+    {
 		girlyArray[i] = new createType(
             "badMovie", IMAGES_ROOT + "movies/girly/" + i + ".jpg");
-		
+
         horrorArray[i] = new createType(
             "badMovie", IMAGES_ROOT + "movies/horror/" + i + ".jpg");
-		
+
         natureArray[i] = new createType(
             "badMovie", IMAGES_ROOT + "movies/nature/" + i + ".jpg");
-		
+
         childishArray[i] = new createType(
             "badMovie", IMAGES_ROOT + "movies/childish/" + i + ".jpg");
-		
+
         actionArray[i] = new createType(
             "badMovie", IMAGES_ROOT + "movies/action/"+ i + ".jpg");
-        
+
         AIArray[i] = new createType(
-            "goodMovie", IMAGES_ROOT + "movies/AI.png"); 
-		
+            "goodMovie", IMAGES_ROOT + "movies/AI.png");
+
         //bipSound = loadSound('sound/bip.wav');
 	}
-	
-/****************	supposed values given by SEVA  *******************/
-	
-	
-	myColorValues = [
+
+    /* TODO explain the meaning of the below */
+
+    myColorValues = [
 		60, //pink
 		0,	//red
 		10,	//blue
@@ -80,8 +80,6 @@ function preload() {
 		0,	//yellow
 		0,	//black
 	]
-	
-/****************								  *******************/	
 }
 
 function setup() {
@@ -105,22 +103,31 @@ function draw() {
 	}
 }
 
-
-function displayMovieSliders() {
-	checkValues(myColorValues);
+function displayMovieSliders()
+{
+    checkValues(myColorValues);
 	pickMovies();
-	var firstSlider = document.getElementById("slider1");
-	var secondSlider = document.getElementById("slider2");
-	var thirdSlider = document.getElementById("slider3");
-	resetTheSlider(firstSlider, secondSlider, thirdSlider);
-	for (var i = 0; i < 10; i++) {
-	firstSlider.innerHTML += '<div><a><img src="'+displayArray[i].img+'" class="'+displayArray[i].status+'"></a></div>';
-	secondSlider.innerHTML += '<div><a><img src="'+displayArray[10+i].img+'" class="'+displayArray[i+10].status+'"></a></div>';
-	thirdSlider.innerHTML += '<div><a><img src="'+displayArray[20+i].img+'" class="'+displayArray[i+20].status+'"></a></div>';
+
+    var firstSlider = document.getElementById("slider1"),
+        secondSlider = document.getElementById("slider2"),
+        thirdSlider = document.getElementById("slider3");
+
+    resetTheSlider(firstSlider, secondSlider, thirdSlider);
+
+    for (var i = 0; i < 10; i++)
+    {
+        firstSlider.innerHTML += '<div><a><img src="' + displayArray[i].img +
+            '" class="' + displayArray[i].status + '"></a></div>';
+
+        secondSlider.innerHTML += '<div><a><img src="' + displayArray[10+i].img +
+            '" class="' + displayArray[i+10].status + '"></a></div>';
+
+        thirdSlider.innerHTML += '<div><a><img src="' + displayArray[20+i].img +
+            '" class="' + displayArray[i+20].status + '"></a></div>';
 	}
 	resetSlider = false;
 	moviesReady = true;
-	createTheSlider();
+    createTheSlider();
 
     $('img').click(function()
     {
@@ -138,8 +145,6 @@ function displayMovieSliders() {
             responsiveVoice.speak("Good Choice");
         }
     });
-
-
 }
 
 function resetTheSlider(firstSlider, secondSlider, thirdSlider) {
@@ -151,15 +156,19 @@ function resetTheSlider(firstSlider, secondSlider, thirdSlider) {
 	thirdSlider.className = "center slider";
 }
 
-
-function pickMovies() {
+function pickMovies()
+{
 	displayArray = [];
-	for (var i = 0; i < amountsArray.length; i++) {
-		var swappedIndex = getSwappedIndex();
-		for (var j = 0; j < amountsArray[i]; j++) {
-		var pickedMovie = swappedIndex[j];
-		console.log(pickedMovie);
-		displayArray.push(typeArray[i][pickedMovie]);
+
+    for (var i = 0; i < amountsArray.length; i++)
+    {
+        var swappedIndex = getSwappedIndex();
+
+        for (var j = 0; j < amountsArray[i]; j++)
+        {
+            var pickedMovie = swappedIndex[j];
+            console.log(pickedMovie);
+            displayArray.push(typeArray[i][pickedMovie]);
 		}
 	}
 }
@@ -175,14 +184,11 @@ function getSwappedIndex() {
 	mySwappArray[randomIndex] =  mySwappArray[j];
 	mySwappArray[j] = tempValue;
 	}
-	return mySwappArray;	
+	return mySwappArray;
 }
 
-
-
-
 function checkValues(myValueArray) {
-	
+
 // 	var pinkValue = myValueArray[0];
 // 	var redValue = myValueArray[1];
 // 	var blueValue = myValueArray[2];
@@ -197,14 +203,14 @@ function checkValues(myValueArray) {
 	var yellowValue = int(random(70));
 	var blackValue = int(random(70));
 
-	
+
 	var totalValues = pinkValue + redValue + blueValue + greenValue + yellowValue + blackValue + 1;
-	
+
 	amountsArray[0] = int(pinkValue/totalValues*30);
 	amountsArray[1] = int(redValue/totalValues*30);
 	amountsArray[2] = (int(blueValue/totalValues*30)+int(greenValue/totalValues*30));
 	amountsArray[3] = int(yellowValue/totalValues*30);
-	amountsArray[4] = int(blackValue/totalValues*30);	
+	amountsArray[4] = int(blackValue/totalValues*30);
 	var newTotal = int(pinkValue/totalValues*30)+int(redValue/totalValues*30)+(int(blueValue/totalValues*30)+int(greenValue/totalValues*30))+int(yellowValue/totalValues*30)+int(blackValue/totalValues*30);
 	amountsArray[5] = 30 - newTotal;
 // 	console.log("the total: "+ newTotal);
@@ -227,27 +233,11 @@ function keyPressed() {
   	if (keyCode == 49) {
   		var firstImg = document.getElementById("img1");
   		console.log(firstImg);
-  	}	
-  }
-  
-function mousePressed() {
-	
-	checkImages();
-	
+  	}
 }
-
-function checkImages() {
-
-
-	
-}
-
-  
 
 // create different types of movie classes
 function createType(myMoviestatus, incomingImage) {
-
   this.img = incomingImage;
   this.status = myMoviestatus;
-  
 };

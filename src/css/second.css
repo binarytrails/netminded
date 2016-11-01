@@ -3,12 +3,23 @@
     src: url(../fonts/open.ttf);
 }
 
+body
+{
+    background-color: #1a1a1a; /* patch for the #container FIXME */
+}
 
-body{
+/* FIXME: doesn't stretch at all height maybe due to dynamic html */
+#container
+{
+    position: absolute;
+    top:0; right:0; left:0; bottom: 0;
+	width: 100%;
+    height: 100%;
+    z-index: 3;
+    background-color: #1a1a1a;
 	/** background-image: url(../images/background_2.jpg);
 	background-size: 100%;
 	background-position: center;  **/
-	background-color: #1a1a1a;
 }
 
 #fullImg {

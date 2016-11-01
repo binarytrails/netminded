@@ -2,30 +2,30 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <link rel="shortcut icon" href="../images/favicon.ico" /> 
+    <link rel="shortcut icon" href="../images/favicon.ico" />
     <title>Netminded</title>
-    
+
     <!--jQuery-->
   	<script src="../libs/jquery-2.2.0.min.js" type="text/javascript"></script>
     <script src="../libs/jquery.min.js"></script>
 	<script src="../libs/jquery-ui.min.js"></script>
-    
-    <script src='../libs/responsivevoice.js'></script>
-    
+
     <!--P5-->
     <script src="../libs/p5.js" type="text/javascript"></script>
     <script src="../libs/p5.dom.js" type="text/javascript"></script>
     <script src="../libs/p5.sound.js" type="text/javascript"></script>
 
-	<!--Library - Slick -->
+	<!--Other libraries -->
+    <script src='../libs/responsivevoice.js'></script>
   	<script src="../libs/slick.js" type="text/javascript" charset="utf-8"></script>
-  
+    <script src="../libs/tracking-min.js"></script>
+
 	<!--javascript-->
    	<script src="js/sketch.js" type="text/javascript" charset="utf-8"></script>
 
     <link rel="stylesheet" type="text/css" href="css/second.css">
   	<link rel="stylesheet" type="text/css" href="css/second-carousel.css">
-  	
+
     <style type="text/css">
         html, body {
           margin: 0;
@@ -52,24 +52,74 @@
           height: 200px;
         }
         /*Arrows*/
-        .slick-prev:before, 
+        .slick-prev:before,
         .slick-next:before {
             color: black;
-    }
-  </style>
-</head>
-<body>
-    <!-- <div id="whiteSquare"></div> --!>
-    <img id="logo"src="../images/logo.png">  <!--Logo-->
+        }
+        video, canvas
+        {
+            margin-left: 100px;
+            margin-top: 35px;
+            position: absolute;
+        }
+    </style>
+    <script>
+        $(document).ready(function()
+        {
+            // Camera processing using tracking.js
+            tracking.track('#video', tracker, { camera: true });
 
-    <img src="../images/background_2.jpg" id="fullImg"></img>
+            tracker.on('track', function(event)
+            {
+                context.clearRect(0, 0, canvas.width, canvas.height);
 
-    <section class="center slider" id="slider1"></section>
-    <section class="center slider" id="slider2"></section>
-    <section class="center slider" id="slider3"></section>
+                event.data.forEach(function(rect)
+                {
+                    // Colors logic
+                    //console.log(rect.color);
 
-    <div id="footer">
-        &copy; 2016-2078 Netminded, Inc
+                    if (rect.color == 'skin')
+                    {
+                        console.log('implement skin color logic');
+                    }
+
+                    // To see them on camera display turn-off the z-index on #container
+                    drawRectangles(context, rect);
+                });
+
+                // Add the colors to the tracker
+                for (var name in colors)
+                {
+                    tracker.customColor = colors[name];
+                    createCustomColor(tracking, name, colors[name]);
+                }
+                // Update the tracker
+                tracker.setColors(trackedColors);
+            });
+        });
+    </script>
+  </head>
+  <body>
+    <div id="container">
+        <!-- <div id="whiteSquare"></div> --!>
+        <img id="logo"src="../images/logo.png">
+        <img src="../images/background_2.jpg" id="fullImg"></img>
+
+        <section class="center slider" id="slider1"></section>
+        <section class="center slider" id="slider2"></section>
+        <section class="center slider" id="slider3"></section>
+
+        <div id="footer">
+            &copy; 2016-2078 Netminded, Inc
+        </div>
     </div>
-</body>
+    <div class="video-frame">
+        <video id="video" width="600" height="450"
+            preload autoplay loop muted controls>
+        </video>
+        <canvas id="canvas" width="600" height="450"></canvas>
+    </div>
+    <!-- Load the camera script once the video-frame is loaded -->
+    <script src="js/camera.js"></script>
+  </body>
 </html>
