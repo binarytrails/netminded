@@ -22,6 +22,7 @@
 
 	<!--javascript-->
    	<script src="js/sketch.js" type="text/javascript" charset="utf-8"></script>
+   	<script src="js/utils.js" type="text/javascript" charset="utf-8"></script>
 
     <link rel="stylesheet" type="text/css" href="css/second.css">
   	<link rel="stylesheet" type="text/css" href="css/second-carousel.css">
@@ -67,6 +68,16 @@
         $(document).ready(function()
         {
             initCameraTracking();
+
+            // random colors
+            var randomColors = colors;
+            for (var name in colors)
+            {
+                colors[name].percentage = getRandomInt(0, 70);
+            }
+            console.log(randomColors);
+            initMovies(randomColors);
+            /*
             if (!cameraReady)
             {
                 responsiveVoice.speak("I cannot see you.");
@@ -87,7 +98,7 @@
             {
                 responsiveVoice.speak("Hi there!");
                 initMovies(colors);
-            }
+            }*/
         });
     </script>
   </head>

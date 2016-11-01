@@ -15,32 +15,32 @@
 var colors = {
     pink:
     {
-        hex: '#',
+        hex: '#877f7f',
         rectCounter: 0,
         percentage: 0
     },
     red: {
-        hex: '#',
+        hex: '#ffffff',
         rectCounter: 0,
         percentage: 0
     },
     blue: {
-        hex: '#',
+        hex: '#ffffff',
         rectCounter: 0,
         percentage: 0
     },
     green: {
-        hex: '#',
+        hex: '#ffffff',
         rectCounter: 0,
         percentage: 0
     },
     yellow: {
-        hex: '#',
+        hex: '#ffffff',
         rectCounter: 0,
         percentage: 0
     },
     black: {
-        hex: '#000000',
+        hex: '#ffffff',
         rectCounter: 0,
         percentage: 0
     }
@@ -61,7 +61,7 @@ var capStart = (new Date()).getTime(),  // secs
 
 tracker.on('track', function(event)
 {
-    cameraReady = true;
+//    cameraReady = true;
     context.clearRect(0, 0, canvas.width, canvas.height);
 
     event.data.forEach(function(rect)
@@ -73,7 +73,7 @@ tracker.on('track', function(event)
         if ((diffInSeconds(capStart) >= capInterval) &&
             (diffInSeconds(capStart) <= (capInterval + capDelay)))
         {
-            console.log('timed color capturing ');
+            //console.log('timed color capturing ');
             /* FIXME:
              *  Getting called too many times even with 0 delay
              *  Maybe due to the tracking events going too fast
@@ -86,9 +86,9 @@ tracker.on('track', function(event)
             capStart = (new Date()).getTime();
             for (var name in colors)
             {
-                console.log("Color : " + name);
-                console.log("Rectangles : " + colors[name].rectCounter);
-                console.log("Percentage : " + colors[name].percentage);
+                //console.log("Color : " + name);
+                //console.log("Rectangles : " + colors[name].rectCounter);
+                //console.log("Percentage : " + colors[name].percentage);
 
                 colors[name].rectCounter = 0;
                 colors[name].percentage = 0;
