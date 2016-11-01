@@ -11,10 +11,6 @@
  *
 */
 
-var canvas = document.getElementById('canvas'),
-    context = canvas.getContext('2d'),
-    tracker = new tracking.ColorTracker();
-
 // The ones we want to track
 var colors = {
     skin: '#877f7f',
@@ -44,6 +40,58 @@ var colors = {
 */
 var supportedColors = ["cyan", "magenta", "yellow"],
     trackedColors = Object.keys(colors); //.concat(supportedColors);
+
+var canvas = document.getElementById('canvas'),
+    context = canvas.getContext('2d'),
+    tracker = new tracking.ColorTracker();
+
+// Capture vars to time the color processing
+var capStart = (new Date()).getTime(),  // secs
+    capInterval = 5,                    // secs
+    capDelay = 2;                       // secs
+
+tracker.on('track', function(event)
+{
+    context.clearRect(0, 0, canvas.width, canvas.height);
+
+    event.data.forEach(function(rect)
+    {
+        // Colors logic
+        //console.log(rect.color);
+
+        // It will look every n sec (interval) during k sec (delay)
+        if ((diffInSeconds(capStart) >= capInterval) &&
+            (diffInSeconds(capStart) <= capInterval + capDelay))
+        {
+            console.log('timed color capturing');
+        }
+        // After which it will reset capture start to current time
+        else if (diffInSeconds(capStart) >= capInterval + capDelay)
+        {
+            capStart = (new Date()).getTime();
+        }
+
+        /* To see them on camera display
+         * turn-off the z-index on #container
+         */
+        drawRectangles(context, rect);
+    });
+
+    // Add the colors to the tracker
+    for (var name in colors)
+    {
+        tracker.customColor = colors[name];
+        createCustomColor(
+            tracking, name, colors[name]);
+    }
+    // Update the tracker
+    tracker.setColors(trackedColors);
+});
+
+function initCameraTracking()
+{
+    tracking.track('#video', tracker, { camera: true });
+}
 
 function createCustomColor(tracking, colorName, value)
 {
