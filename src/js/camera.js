@@ -19,9 +19,29 @@ var canvas = document.getElementById('canvas'),
 var colors = {
     skin: '#877f7f',
     snapback: '#0f307d',
-    yellowBallon: '#89893f'
+    yellowBallon: '#89893f',
+    purpleTshirt: '#6b416e'
 };
-
+/*
+var colors = {
+    skin: {
+        hex: '#877f7f',
+        detected = false
+    },
+    snapback: {
+        hex: '#0f307d',
+        detected = false
+    },
+    yellowBallon: {
+        hex: '#89893f',
+        detected = false
+    },
+    purpleTshirt: {
+        hex: '#6b416e',
+        detected = false
+    }
+};
+*/
 var supportedColors = ["cyan", "magenta", "yellow"],
     trackedColors = Object.keys(colors); //.concat(supportedColors);
 
@@ -101,5 +121,13 @@ function drawRectangles(context, rect)
     );
     context.fillText('y: ' + rect.y + 'px',
             rect.x + rect.width + 5, rect.y + 22
+    );
+}
+
+function diffInSeconds(fromTime)
+{
+    var endDate = new Date();
+    return Math.floor(
+        (endDate - fromTime) / 1000
     );
 }
