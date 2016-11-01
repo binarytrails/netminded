@@ -63,12 +63,14 @@ function preload()
 
         actionArray[i] = new createType(
             "badMovie", IMAGES_ROOT + "movies/action/"+ i + ".jpg");
-
-        AIArray[i] = new createType(
-            "goodMovie", IMAGES_ROOT + "movies/AI.png");
-
-        //bipSound = loadSound('sound/bip.wav');
 	}
+	
+	for (var i = 0; i < 6; i++) {
+	
+	AIArray[i] = new createType(
+            "goodMovie", IMAGES_ROOT + "movies/evil-ai/"+ i +".jpg");
+            
+    }
 
     /* TODO explain the meaning of the below */
 
@@ -160,9 +162,9 @@ function pickMovies()
 {
 	displayArray = [];
 
-    for (var i = 0; i < amountsArray.length; i++)
+    for (var i = 0; i < amountsArray.length-1; i++)
     {
-        var swappedIndex = getSwappedIndex();
+        var swappedIndex = getSwappedIndex(30);
 
         for (var j = 0; j < amountsArray[i]; j++)
         {
@@ -171,11 +173,31 @@ function pickMovies()
             displayArray.push(typeArray[i][pickedMovie]);
 		}
 	}
+	// and for It's own A.I movies
+	
+	var shortSwappedIndex = getSwappedIndex(6);
+	
+	for (var i = 0; i < amountsArray[5]; i++) 
+	{
+		var pickedMovie = shortSwappedIndex[i];
+		displayArray.push(typeArray[5][pickedMovie]);
+	}
+	
+	//mixing all of the picked movies together
+	
+	var lastSwap = getSwappedIndex(30);
+	for (var j = 0; j < displayArray.length; j++)
+	{
+	var tempValue = displayArray[j];
+	displayArray[j] = displayArray[lastSwap[j]];
+	displayArray[lastSwap[j]] = tempValue;
+	}
+	
 }
 
-function getSwappedIndex() {
+function getSwappedIndex(wantedLength) {
 	var mySwappArray = [];
-	for (var i = 0; i < 29; i++) {
+	for (var i = 0; i < wantedLength; i++) {
 		mySwappArray[i] = i;
 	}
 	for (var j = 0; j < mySwappArray.length; j++) {
@@ -213,12 +235,6 @@ function checkValues(myValueArray) {
 	amountsArray[4] = int(blackValue/totalValues*30);
 	var newTotal = int(pinkValue/totalValues*30)+int(redValue/totalValues*30)+(int(blueValue/totalValues*30)+int(greenValue/totalValues*30))+int(yellowValue/totalValues*30)+int(blackValue/totalValues*30);
 	amountsArray[5] = 30 - newTotal;
-// 	console.log("the total: "+ newTotal);
-// 	console.log("pink amount: "+ amountsArray[0]);
-// 	console.log("red amount: "+ amountsArray[1]);
-// 	console.log("nature amount: "+ amountsArray[2]);
-// 	console.log("yellow amount: "+ amountsArray[3]);
-// 	console.log("black amount: "+ amountsArray[4]);
 }
 
 // When the window is resized, changes the canvas' size to match it
