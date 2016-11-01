@@ -21,5 +21,8 @@ Context: CART 351 - Networks & Navigation
     - Top banner
     - Better css (i.e. carousel arrows)
     - Add sound after n lock attempts
-    - Do process documentation
+
+- Deliverable
+    - Process documentation
     - Comment code
+    - Clean code
