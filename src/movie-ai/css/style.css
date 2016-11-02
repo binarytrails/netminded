@@ -1,0 +1,28 @@
+/*
+
+Initial code: 
+CART 351
+Beach Party
+
+Now used to  display a movie full screen that the Ai wants you to watch
+
+*/
+
+html {
+	width: 100%;
+	height: 100%;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+
+}
+
+#wrapper {
+	margin: 0 auto;
+	padding: 0px;
+	height: 100%;
+	overflow: hidden;
+}

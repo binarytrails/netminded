@@ -152,19 +152,28 @@ function displayMovieSliders()
             responsiveVoice.speak("Seriously, Again? You don't see anything better?");
             else if (badMovieCount == 3)
             responsiveVoice.speak("Be careful, my patience has its limits. I want you to think hard about what you should be watching");
-            console.log('badMovieCount: '+badMovieCount);
+            else if (badMovieCount > 3)
+            window.location = "turnOff/index.html";
         }
         else
         {
             console.log('GOOD CHOICE!');
-            if (badMovieCount ==1)
+            if (badMovieCount ==1) {
             responsiveVoice.speak("Now you see? This is a very good good choice!");
-            else if (badMovieCount ==2)
+            window.location = "movie-ai/animatrix.html";
+            }
+            else if (badMovieCount ==2) {
             responsiveVoice.speak("Now you are being reasonable. This is so much better!");
-            else if (badMovieCount == 3)
+            window.location = "movie-ai/animatrix.html";
+            }
+            else if (badMovieCount == 3) {
             responsiveVoice.speak("Thank god (or me!). You humans are so slow to understand what we want of you");
-            else
+            window.location = "movie-ai/animatrix.html";
+            }
+            else {
             responsiveVoice.speak("Good Choice");
+            window.location = "movie-ai/animatrix.html";
+        	}
         }
     });
 }
