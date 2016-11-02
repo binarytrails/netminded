@@ -69,42 +69,18 @@
         {
             initCameraTracking();
 
-            // random colors
+            // No camera at start = random colors to initMovies
             var randomColors = colors;
             for (var name in colors)
             {
                 colors[name].percentage = getRandomInt(0, 70);
             }
-            console.log(randomColors);
             initMovies(randomColors);
-            /*
-            if (!cameraReady)
-            {
-                responsiveVoice.speak("I cannot see you.");
-            }
-            else if (!cameraHasColors())
-            {
-                responsiveVoice.speak("Is there anyone?");
-
-                // random colors
-                var randomColors = colors;
-                for (var name in colors)
-                {
-                    colors[name].percentage = int(Math.random(70));
-                }
-                initMovies(randomColors);
-            }
-            else
-            {
-                responsiveVoice.speak("Hi there!");
-                initMovies(colors);
-            }*/
         });
     </script>
   </head>
   <body>
     <div id="container">
-        <!-- <div id="whiteSquare"></div> --!>
         <img id="logo"src="../images/logo.png">
         <img src="../images/background_2.jpg" id="fullImg"></img>
 

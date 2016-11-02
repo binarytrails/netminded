@@ -89,18 +89,46 @@ function setup() {
 	];
 }
 
-function draw() {
-	//background(255, 255, 255);
-	//image(displayArray[currentMovie].img, 20, 20, girlyArray[2].img.width/4, girlyArray[2].img.height/4);
-	//text(displayArray[currentMovie].title, width/2, 20);
-	if (cameraInitialized) {
-		if (resetSlider) {
+var notSpeakYet = true,
+    trackColorTime = 0;
+
+function detectingColors()
+{
+    return true;
+}
+
+function draw()
+{
+    trackColorTime = int(millis());
+
+    if (cameraReady)
+    {
+        /*
+        if (detectingColors())
+        {
+            console.log('colors detected');
+            if (trackColorTime % 5000)
+            {
+                console.log(colors);
+                initMovies(colors);
+            }
+        }
+        */
+
+		if (resetSlider)
+        {
 			displayMovieSliders();
 		}
 	}
+    else if (notSpeakYet)
+    {
+        responsiveVoice.speak("Is there anyone there?");
+        notSpeakYet = false;
+    }
 }
 
-function initMovies(colors) {
+function initMovies(colors)
+{
 	resetSlider = true;
 	console.log(colors.pink.percentage);
 	myColorValues = [];
@@ -110,7 +138,6 @@ function initMovies(colors) {
 	myColorValues.push(colors.green.percentage);
 	myColorValues.push(colors.yellow.percentage);
 	myColorValues.push(colors.black.percentage);
-	cameraInitialized = true;
 }
 
 function displayMovieSliders()

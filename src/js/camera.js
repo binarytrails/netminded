@@ -61,7 +61,7 @@ var capStart = (new Date()).getTime(),  // secs
 
 tracker.on('track', function(event)
 {
-//    cameraReady = true;
+    cameraReady = true;
     context.clearRect(0, 0, canvas.width, canvas.height);
 
     event.data.forEach(function(rect)
@@ -221,4 +221,16 @@ function diffInSeconds(fromTime)
     return Math.floor(
         (endDate - fromTime) / 1000
     );
+}
+
+function cameraHasColors()
+{
+    for (var name in Object.keys(colors))
+    {
+        if (colors[name].percentage > 0)
+        {
+            return true;
+        }
+    }
+    return false;
 }
