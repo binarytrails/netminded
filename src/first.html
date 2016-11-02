@@ -58,12 +58,14 @@
                 else
                 {
                     attempt++;
-                    if (attempt > 3)
+                    if (attempt == 2)
                     {
-                        //responsiveVoice.speak("I don't see you");
+                        responsiveVoice.speak("I don't see you");
                     }
-                    $(this).effect("shake", { times: 2 }, 500);
-                }
+                    else if (attempt > 2)
+                    {
+                    	responsiveVoice.speak("Please, allow the camera to continue");
+                    }
             });
         }; 
     </script>
