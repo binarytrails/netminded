@@ -70,10 +70,12 @@
             initCameraTracking();
 
             // No camera at start = random colors to initMovies
-            var randomColors = colors;
-            for (var name in colors)
+            var randomColors = {};
+            for (var name in cameraColors)
             {
-                colors[name].percentage = getRandomInt(0, 70);
+                randomColors[name] = {
+                    percentage: getRandomInt(0, 70)
+                };
             }
             initMovies(randomColors);
         });

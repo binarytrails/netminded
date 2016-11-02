@@ -89,31 +89,24 @@ function setup() {
 	];
 }
 
-var notSpeakYet = true,
-    trackColorTime = 0;
-
-function detectingColors()
-{
-    return true;
-}
+var notSpeakYet = true;
 
 function draw()
 {
-    trackColorTime = int(millis());
+    updateMoviesInterval = int(millis() / 1000);    // in secs
 
     if (cameraReady)
     {
-        /*
-        if (detectingColors())
+        if (cameraHasColors())
         {
-            console.log('colors detected');
-            if (trackColorTime % 5000)
+            console.log('cameraColors detected');
+            console.log(updateMoviesInterval);
+            if (updateMoviesInterval % 10 == 0)
             {
-                console.log(colors);
-                initMovies(colors);
+                console.log(cameraColors);
+                initMovies(cameraColors);
             }
         }
-        */
 
 		if (resetSlider)
         {

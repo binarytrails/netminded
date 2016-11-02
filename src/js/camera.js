@@ -12,7 +12,7 @@
 */
 
 // The colors we want to track
-var colors = {
+var cameraColors = {
     pink:
     {
         hex: '#877f7f',
@@ -47,7 +47,7 @@ var colors = {
 };
 
 var supportedColors = ["cyan", "magenta", "yellow"],
-    trackedColors = Object.keys(colors); //.concat(supportedColors);
+    trackedColors = Object.keys(cameraColors); //.concat(supportedColors);
 
 var canvas = document.getElementById('canvas'),
     context = canvas.getContext('2d'),
@@ -57,7 +57,7 @@ var canvas = document.getElementById('canvas'),
 // Capture vars to time the color processing
 var capStart = (new Date()).getTime(),  // secs
     capInterval = 5,                    // secs
-    capDelay = 0;                       // secs
+    capDelay = 0.1;                     // secs
 
 tracker.on('track', function(event)
 {
@@ -69,6 +69,15 @@ tracker.on('track', function(event)
         // Colors logic
         //console.log(rect.color);
 
+        // New capture - reset parms
+        if (diffInSeconds(capStart) == capInterval)
+        {
+            for (var name in cameraColors)
+            {
+                cameraColors[name].rectCounter = 0;
+                cameraColors[name].percentage = 0;
+            }
+        }
         // It will look every n sec (interval) during k sec (delay)
         if ((diffInSeconds(capStart) >= capInterval) &&
             (diffInSeconds(capStart) <= (capInterval + capDelay)))
@@ -80,18 +89,17 @@ tracker.on('track', function(event)
              */
             updateColorPercentage(rect);
         }
-        // After which it will reset the capture
+        // After which it will reset the time
         else if (diffInSeconds(capStart) >= capInterval + capDelay)
         {
             capStart = (new Date()).getTime();
-            for (var name in colors)
+            for (var name in cameraColors)
             {
-                //console.log("Color : " + name);
-                //console.log("Rectangles : " + colors[name].rectCounter);
-                //console.log("Percentage : " + colors[name].percentage);
-
-                colors[name].rectCounter = 0;
-                colors[name].percentage = 0;
+                /*
+                console.log("Color : " + name);
+                console.log("Rectangles : " + cameraColors[name].rectCounter);
+                console.log("Percentage : " + cameraColors[name].percentage);
+                */
             }
         }
 
@@ -101,12 +109,12 @@ tracker.on('track', function(event)
         drawRectangles(context, rect);
     });
 
-    // Add the colors to the tracker
-    for (var name in colors)
+    // Add the cameraColors to the tracker
+    for (var name in cameraColors)
     {
-        tracker.customColor = colors[name];
+        tracker.customColor = cameraColors[name];
         createCustomColor(
-            tracking, name, colors[name].hex);
+            tracking, name, cameraColors[name].hex);
     }
     // Update the tracker
     tracker.setColors(trackedColors);
@@ -120,15 +128,15 @@ function updateColorPercentage(rect)
 
     var rectSurfacePercentage = Math.floor(rectSurface / canvasSurface);
 
-    var newPercentage = colors[name].percentage + rectSurfacePercentage;
+    var newPercentage = cameraColors[name].percentage + rectSurfacePercentage;
 
     if (newPercentage > 100)
     {
         newPercentage = 100;
     }
 
-    colors[name].rectCounter++;
-    colors[name].percentage = newPercentage;
+    cameraColors[name].rectCounter++;
+    cameraColors[name].percentage = newPercentage;
 }
 
 function initCameraTracking()
@@ -194,7 +202,7 @@ function drawRectangles(context, rect)
     if (trackedColors.indexOf(rect.color) != -1)
     {
         // Set its borders to the same color that we track
-        rect.color = colors[rect.color];
+        rect.color = cameraColors[rect.color];
     }
     else
     {
@@ -225,9 +233,9 @@ function diffInSeconds(fromTime)
 
 function cameraHasColors()
 {
-    for (var name in Object.keys(colors))
+    for (var name in cameraColors)
     {
-        if (colors[name].percentage > 0)
+        if (cameraColors[name].percentage > 0)
         {
             return true;
         }
