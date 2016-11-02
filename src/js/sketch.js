@@ -74,14 +74,7 @@ function preload()
 
     /* TODO explain the meaning of the below */
 
-    myColorValues = [
-		0, //pink
-		0,	//red
-		0,	//blue
-		0,	//green
-		0,	//yellow
-		0,	//black
-	]
+    //var myColorValues = [];
 }
 
 function setup() {
@@ -108,19 +101,21 @@ function draw() {
 }
 
 function initMovies(colors) {
-	cameraInitialized = true;
 	resetSlider = true;
-	myColorValues[0] = colors.pink.percentage;
-	myColorValues[1] = colors.red.percentage;
-	myColorValues[2] = colors.blue.percentage;
-	myColorValues[3] = colors.green.percentage;
-	myColorValues[4] = colors.yellow.percentage;
-	myColorValues[5] = colors.black.percentage;
+	console.log(colors.pink.percentage);
+	myColorValues = [];
+	myColorValues.push(colors.pink.percentage);
+	myColorValues.push(colors.red.percentage);
+	myColorValues.push(colors.blue.percentage);
+	myColorValues.push(colors.green.percentage);
+	myColorValues.push(colors.yellow.percentage);
+	myColorValues.push(colors.black.percentage);
+	cameraInitialized = true;
 }
 
 function displayMovieSliders()
 {
-    checkValues(myColorValues);
+    checkValues();
 	pickMovies();
 
     var firstSlider = document.getElementById("slider1"),
@@ -208,17 +203,6 @@ function pickMovies()
             displayArray.push(typeArray[i][pickedMovie]);
 		}
 	}
-	
-	//mixing all of the picked movies together
-	
-	// var lastSwap = getSwappedIndex(30);
-// 	for (var j = 0; j < displayArray.length; j++)
-// 	{
-// 	var tempValue = displayArray[j];
-// 	displayArray[j] = displayArray[lastSwap[j]];
-// 	displayArray[lastSwap[j]] = tempValue;
-// 	}
-	
 }
 
 function getSwappedIndex(wantedLength) {
@@ -235,22 +219,16 @@ function getSwappedIndex(wantedLength) {
 	return mySwappArray;
 }
 
-function checkValues(myValueArray) {
+function checkValues() {
 
-	var pinkValue = myValueArray[0];
-	var redValue = myValueArray[1];
-	var blueValue = myValueArray[2];
-	var greenValue = myValueArray[3];
-	var yellowValue = myValueArray[4];
-	var blackValue = myValueArray[5];
-
-// 	var pinkValue = int(random(70));
-// 	var redValue = int(random(70));
-// 	var blueValue = int(random(70));
-// 	var greenValue = int(random(70));
-// 	var yellowValue = int(random(70));
-// 	var blackValue = int(random(70));
-
+	var pinkValue = myColorValues[0];
+	var redValue = myColorValues[1];
+	var blueValue = myColorValues[2];
+	var greenValue = myColorValues[3];
+	var yellowValue = myColorValues[4];
+	var blackValue = myColorValues[5];
+	
+	console.log("pink value: "+myColorValues[0]);
 
 	var totalValues = pinkValue + redValue + blueValue + greenValue + yellowValue + blackValue + 1;
 
@@ -261,6 +239,8 @@ function checkValues(myValueArray) {
 	amountsArray[5] = int(blackValue/totalValues*30);
 	var newTotal = int(pinkValue/totalValues*30)+int(redValue/totalValues*30)+(int(blueValue/totalValues*30)+int(greenValue/totalValues*30))+int(yellowValue/totalValues*30)+int(blackValue/totalValues*30);
 	amountsArray[0] = 30 - newTotal;
+	
+	//console.log("new Total =" newTotal);
 }
 
 // When the window is resized, changes the canvas' size to match it
