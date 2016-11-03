@@ -1,6 +1,31 @@
 /*
 
+Code based on:
 
+CART 351
+Beach Party
+
+Author: Pippin Barr
+
+A "simple" application of jQuery UI's .draggable() and .resizable() to create
+a beach party on a totally Tubular beach. Basic concept is simple, but adds
+some UI niceties and ties a few ideas together (sound, Tubular backround video
+drag and (conditional) resize).
+
+
+Reused into:
+
+CART 351 – Networks & Navigation
+	Assignment 03 - Evil A.I
+	Fictional Netminded (Evil Netflix) webpage 
+	
+	Here jquery to make the user watch Animatrix full screen with no capacity to stop
+
+	Authors: 	this part was mainly coded by Marie Pontais (unless notified otherwise)
+				Group members: Seva Ivanov & Daniel Munoz Ortiz
+
+	see https://sevaivanov.github.io/netminded/ to browse the final version of the project
+	see www.mariepontaiscart351.wordpress.com for credits & process documentation 
 
 */
 
